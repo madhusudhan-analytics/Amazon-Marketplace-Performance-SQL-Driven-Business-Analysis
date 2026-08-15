@@ -410,3 +410,52 @@ order by Order_Month;
 
 **Finding:**
 AOV was consistently highest in 2020, particularly in January and February, and structurally declined from 2021 onward as order volume increased. 2024 sits clearly at the bottom of nearly every month, consistent with the data completeness issue identified earlier rather than a genuine demand drop. The ribbon view highlights how AOV rank between years shifts throughout the calendar year, though 2020 and 2024 remain the clearest outliers at the top and bottom respectively.
+
+### Section 2: Customer Behavior
+
+#### Q6: What percentage of customers are repeat buyers vs. one-time buyers, and how much revenue does each group drive?
+
+**Query:**
+```sql
+-- Customer count and % split
+with Customer_Order_Counts as (
+    select o.Customer_id, count(distinct o.Order_id) as Order_Count
+    from Orders o
+    group by o.Customer_id
+)
+select 
+    case when Order_Count > 1 then 'Repeat' else 'One-time' end as Customer_Type,
+    count(*) as Num_Customers,
+    round(count(*) * 100.0 / sum(count(*)) over (), 2) as Pct_of_Customers
+from Customer_Order_Counts
+group by case when Order_Count > 1 then 'Repeat' else 'One-time' end;
+
+-- Revenue by customer type
+with Customer_Order_Counts as (
+    select o.Customer_id, count(distinct o.Order_id) as Order_Count
+    from Orders o
+    group by o.Customer_id
+),
+Customer_Type_Labels as (
+    select Customer_id,
+           case when Order_Count > 1 then 'Repeat' else 'One-time' end as Customer_Type
+    from Customer_Order_Counts
+)
+select ctl.Customer_Type,
+       count(distinct ctl.Customer_id) as Num_Customers,
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue,
+       round(sum(oi.Quantity * oi.Price_per_unit) / count(distinct ctl.Customer_id), 2) as Revenue_Per_Customer
+from Customer_Type_Labels ctl
+join Orders o on ctl.Customer_id = o.Customer_id
+join Order_items oi on o.Order_id = oi.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by ctl.Customer_Type;
+```
+
+**Visualization:**
+
+![Repeat vs One-Time Customers](visuals/q06_repeat_vs_onetime_customers.png)
+
+**Finding:**
+94.46% of customers who have ordered at all are repeat buyers, and only 5.54% (38 customers) are one-time buyers. Repeat customers (616, about 90% of paying customers) generate an average of $17,266 in lifetime revenue per customer, about 27x more than one-time buyers ($647 average). This reinforces that customer retention drives the vast majority of revenue, and highlights that improving new-customer conversion into repeat buyers is likely the clearest growth lever for this business.
