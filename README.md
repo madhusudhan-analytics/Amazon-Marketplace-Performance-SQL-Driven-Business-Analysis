@@ -262,3 +262,37 @@ where Shipping_date is null;
 
 **Data Validation Summary:** All checks across Relationship Integrity, Duplicates, and Nulls/Zeros came back clean, with three genuine (non-error) findings carried forward into the business analysis: 212 customers who never ordered, 15 products never sold, and 488 cancelled orders with no shipping record.
 
+## Business Questions Answered
+
+### Section 1: Sales & Revenue Performance
+
+#### Q1: What is total revenue and profit by category, and which categories are most profitable?
+
+**Query:**
+```sql
+select c.Category_name, 
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue,
+       sum(oi.Quantity * (oi.Price_per_unit - p.COGS)) as Total_Profit,
+       round(sum(oi.Quantity * (oi.Price_per_unit - p.COGS)) * 100.0 / 
+             (select sum(oi2.Quantity * (oi2.Price_per_unit - p2.COGS))
+              from Order_items oi2
+              join Products p2 on oi2.Product_id = p2.Product_id
+              join Orders o2 on oi2.Order_id = o2.Order_id
+              join Payments pay2 on o2.Order_id = pay2.Order_id
+              where pay2.Payment_status = 'Payment Successed'), 2) as Profit_Contribution_Pct
+from Order_items oi
+join Products p on oi.Product_id = p.Product_id
+join Category c on p.Category_id = c.Category_id
+join Orders o on oi.Order_id = o.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by c.Category_name;
+```
+
+**Visualization:**
+
+![Revenue and Profit by Category](visuals/q1_category_revenue_profit.png)
+
+**Finding:**
+Electronics contributes nearly 90% of total profit (89.96%), an extreme concentration. Every other category combined accounts for roughly 10%. This signals a significant business risk: any disruption to Electronics (supply issues, demand shift, increased competition) would have an outsized impact on overall profitability. Diversification could be a strategic recommendation worth raising.
+
