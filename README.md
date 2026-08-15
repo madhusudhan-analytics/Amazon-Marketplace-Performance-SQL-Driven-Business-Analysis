@@ -317,3 +317,44 @@ order by Order_Month;
 **Finding:**
 Revenue holds steady between $2.0M–$2.8M per year from 2020–2023, with mild seasonal dips in Jan–Feb and a modest peak in late summer. However, revenue collapses by roughly 95% starting February 2024 and never recovers through July 2024, the end of the dataset. This is almost certainly a data completeness artifact, since the dataset appears to stop being reliably populated after January 2024, rather than a genuine business decline.
 
+#### Q3: What are the top 10 best-selling products by revenue, and do they differ from the top 10 by quantity sold?
+
+**Query:**
+```sql
+-- Top 10 by revenue
+select p.Product_name, 
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue
+from Order_items oi
+join Products p on oi.Product_id = p.Product_id
+join Orders o on oi.Order_id = o.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by p.Product_name
+order by Total_Revenue desc
+limit 10;
+
+-- Top 10 by quantity sold
+select p.Product_name, 
+       sum(oi.Quantity) as Total_Quantity_Sold
+from Order_items oi
+join Products p on oi.Product_id = p.Product_id
+join Orders o on oi.Order_id = o.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by p.Product_name
+order by Total_Quantity_Sold desc
+limit 10;
+```
+
+**Visualization:**
+
+*Top 10 Products by Revenue*
+
+![Top 10 Products by Revenue](visuals/q03_top10_products_by_revenue.png)
+
+*Top 10 Products by Quantity Sold*
+
+![Top 10 Products by Quantity](visuals/q03_top10_products_by_quantity.png)
+
+**Finding:**
+The top 10 products by revenue and top 10 by quantity sold have zero overlap. Revenue leaders are premium, low-volume electronics (Apple iMacs, MacBook Pros, high-end cameras), consistent with Electronics driving ~90% of total profit. Quantity leaders are inexpensive, high-volume items from Sports & Outdoors and Pet Supplies (resistance bands, soccer nets, dog beds). This confirms two distinct business dynamics: a small number of expensive electronics driving revenue and profit, while cheaper accessory-type products drive order volume and frequency.
