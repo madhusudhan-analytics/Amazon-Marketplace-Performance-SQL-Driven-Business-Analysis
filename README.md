@@ -482,3 +482,26 @@ limit 10;
 
 **Finding:**
 Top 10 customers by lifetime spend range from $74,629 to $89,029, a relatively tight cluster rather than one dominant outlier, suggesting a genuine "top tier" segment rather than a single anomaly. These customers spend 4 to 5 times more than the average repeat customer ($17,266), making them a clear candidate for a VIP or loyalty program, or personalized retention outreach.
+
+#### Q8: Which states generate the most revenue and orders, and is there a regional concentration risk?
+
+**Query:**
+```sql
+select c.State,
+       count(distinct o.Order_id) as Total_Orders,
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue
+from Customers c
+join Orders o on c.Customer_id = o.Customer_id
+join Order_items oi on o.Order_id = oi.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by c.State
+order by Total_Revenue desc;
+```
+
+**Visualization:**
+
+![Revenue by State](visuals/q08_revenue_by_state.png)
+
+**Finding:**
+Revenue is extremely concentrated geographically. Ohio alone accounts for 61.57% of total revenue, and Texas adds another 26.25%, meaning just two states generate 87.82% of all revenue. Of the 50 US states, only 34 have any recorded orders at all: Alabama, Alaska, Arizona, Arkansas, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, and Wyoming show zero revenue during this period. This points to a genuinely limited market footprint rather than just an uneven distribution, and is worth investigating further as it may reflect the business's operational, shipping, or marketing reach rather than a lack of organic demand.
