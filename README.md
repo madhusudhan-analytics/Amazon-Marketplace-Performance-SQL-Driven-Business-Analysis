@@ -358,3 +358,32 @@ limit 10;
 
 **Finding:**
 The top 10 products by revenue and top 10 by quantity sold have zero overlap. Revenue leaders are premium, low-volume electronics (Apple iMacs, MacBook Pros, high-end cameras), consistent with Electronics driving ~90% of total profit. Quantity leaders are inexpensive, high-volume items from Sports & Outdoors and Pet Supplies (resistance bands, soccer nets, dog beds). This confirms two distinct business dynamics: a small number of expensive electronics driving revenue and profit, while cheaper accessory-type products drive order volume and frequency.
+
+#### Q4: What percentage of total revenue comes from the top 20% of products?
+
+**Query:**
+```sql
+with Product_Revenue_Ranked as (
+    select p.Product_name,
+           sum(oi.Quantity * oi.Price_per_unit) as Product_Revenue,
+           row_number() over (order by sum(oi.Quantity * oi.Price_per_unit) desc) as Revenue_Rank
+    from Order_items oi
+    join Products p on oi.Product_id = p.Product_id
+    join Orders o on oi.Order_id = o.Order_id
+    join Payments pay on o.Order_id = pay.Order_id
+    where pay.Payment_status = 'Payment Successed'
+    group by p.Product_name
+)
+select 
+    sum(case when Revenue_Rank <= 149 then Product_Revenue else 0 end) as Top20pct_Revenue,
+    sum(Product_Revenue) as Total_Revenue,
+    round(sum(case when Revenue_Rank <= 149 then Product_Revenue else 0 end) * 100.0 / sum(Product_Revenue), 2) as Top20pct_Contribution_Pct
+from Product_Revenue_Ranked;
+```
+
+**Visualization:**
+
+![Pareto Analysis - Top 20% Product Revenue Contribution](visuals/q04_pareto_top20pct_revenue.png)
+
+**Finding:**
+The top 20% of products (149 of 745) generate 79.71% of total revenue, closely matching the classic 80/20 Pareto pattern. This reinforces that revenue is highly concentrated in a relatively small set of high-value products, mostly premium electronics. From a strategy standpoint, protecting and growing this core product set matters far more than trying to boost the long tail of lower-revenue products.
