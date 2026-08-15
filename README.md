@@ -387,3 +387,26 @@ from Product_Revenue_Ranked;
 
 **Finding:**
 The top 20% of products (149 of 745) generate 79.71% of total revenue, closely matching the classic 80/20 Pareto pattern. This reinforces that revenue is highly concentrated in a relatively small set of high-value products, mostly premium electronics. From a strategy standpoint, protecting and growing this core product set matters far more than trying to boost the long tail of lower-revenue products.
+
+#### Q5: How does average order value (AOV) trend month over month?
+
+**Query:**
+```sql
+select date_format(o.Order_date, '%Y-%m') as Order_Month,
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue,
+       count(distinct o.Order_id) as Total_Orders,
+       round(sum(oi.Quantity * oi.Price_per_unit) / count(distinct o.Order_id), 2) as AOV
+from Order_items oi
+join Orders o on oi.Order_id = o.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by date_format(o.Order_date, '%Y-%m')
+order by Order_Month;
+```
+
+**Visualization:**
+
+![AOV Monthly Trend by Year](visuals/q05_aov_monthly_trend.png)
+
+**Finding:**
+AOV was consistently highest in 2020, particularly in January and February, and structurally declined from 2021 onward as order volume increased. 2024 sits clearly at the bottom of nearly every month, consistent with the data completeness issue identified earlier rather than a genuine demand drop. The ribbon view highlights how AOV rank between years shifts throughout the calendar year, though 2020 and 2024 remain the clearest outliers at the top and bottom respectively.
