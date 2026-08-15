@@ -296,3 +296,24 @@ group by c.Category_name;
 **Finding:**
 Electronics contributes nearly 90% of total profit (89.96%), an extreme concentration. Every other category combined accounts for roughly 10%. This signals a significant business risk: any disruption to Electronics (supply issues, demand shift, increased competition) would have an outsized impact on overall profitability. Diversification could be a strategic recommendation worth raising.
 
+#### Q2: What are the monthly revenue trends over the last 4+ years, and is there any seasonality or decline?
+
+**Query:**
+```sql
+select date_format(o.Order_date, '%Y-%m') as Order_Month,
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue
+from Order_items oi
+join Orders o on oi.Order_id = o.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by date_format(o.Order_date, '%Y-%m')
+order by Order_Month;
+```
+
+**Visualization:**
+
+![Monthly Revenue Trend](visuals/q02_monthly_revenue_trend.png)
+
+**Finding:**
+Revenue holds steady between $2.0M–$2.8M per year from 2020–2023, with mild seasonal dips in Jan–Feb and a modest peak in late summer. However, revenue collapses by roughly 95% starting February 2024 and never recovers through July 2024, the end of the dataset. This is almost certainly a data completeness artifact, since the dataset appears to stop being reliably populated after January 2024, rather than a genuine business decline.
+
