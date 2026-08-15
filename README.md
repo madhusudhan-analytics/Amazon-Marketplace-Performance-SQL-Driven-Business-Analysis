@@ -459,3 +459,26 @@ group by ctl.Customer_Type;
 
 **Finding:**
 94.46% of customers who have ordered at all are repeat buyers, and only 5.54% (38 customers) are one-time buyers. Repeat customers (616, about 90% of paying customers) generate an average of $17,266 in lifetime revenue per customer, about 27x more than one-time buyers ($647 average). This reinforces that customer retention drives the vast majority of revenue, and highlights that improving new-customer conversion into repeat buyers is likely the clearest growth lever for this business.
+
+#### Q7: Who are the top 10 customers by lifetime spend?
+
+**Query:**
+```sql
+select c.Customer_id, c.First_name, c.Last_name,
+       sum(oi.Quantity * oi.Price_per_unit) as Lifetime_Spend
+from Customers c
+join Orders o on c.Customer_id = o.Customer_id
+join Order_items oi on o.Order_id = oi.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by c.Customer_id, c.First_name, c.Last_name
+order by Lifetime_Spend desc
+limit 10;
+```
+
+**Visualization:**
+
+![Top 10 Customers by Lifetime Spend](visuals/q07_top10_customers_lifetime_spend.png)
+
+**Finding:**
+Top 10 customers by lifetime spend range from $74,629 to $89,029, a relatively tight cluster rather than one dominant outlier, suggesting a genuine "top tier" segment rather than a single anomaly. These customers spend 4 to 5 times more than the average repeat customer ($17,266), making them a clear candidate for a VIP or loyalty program, or personalized retention outreach.
