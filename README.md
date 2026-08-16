@@ -543,3 +543,28 @@ order by min(Order_Count);
 
 **Finding:**
 Customer order frequency is broadly spread rather than concentrated at either extreme. Only 5.54% of customers are one-time buyers, while nearly a third (30.90%) have placed 10+ orders, the single largest band, representing a genuinely loyal core. Frequency dips notably in the 7-10 order range, suggesting a possible drop-off point before customers either churn early or become true regulars. Combined with the earlier finding that repeat customers drive about 27x more revenue than one-time buyers, this indicates the business has a healthy retention engine, and the real opportunity is converting light repeat buyers (2-6 orders) into the loyal 10+ order segment.
+
+### Section 3: Seller & Marketplace Performance
+
+#### Q10: Which sellers generate the most revenue, and how concentrated is the marketplace?
+
+**Query:**
+```sql
+select s.Seller_id, s.Seller_name,
+       count(distinct o.Order_id) as Total_Orders,
+       sum(oi.Quantity * oi.Price_per_unit) as Total_Revenue
+from Sellers s
+join Orders o on s.Seller_id = o.Seller_id
+join Order_items oi on o.Order_id = oi.Order_id
+join Payments pay on o.Order_id = pay.Order_id
+where pay.Payment_status = 'Payment Successed'
+group by s.Seller_id, s.Seller_name
+order by Total_Revenue desc;
+```
+
+**Visualization:**
+
+![Seller Revenue and Marketplace Concentration](visuals/q10_seller_revenue.png)
+
+**Finding:**
+The top 5 sellers (AnkerDirect, Tech Armor, iSaddle, AmazonBasics, Ailun) generate 65.72% of total revenue, and the top 10 generate 75.3%, meaningful concentration, but more gradual than the extreme dominance seen in category or state analysis. These top sellers are tightly clustered ($1.34M-$1.44M each) rather than one outlier dominating, suggesting a competitive top tier. A long tail of about 25 sellers, mostly household or personal care brands, each generate under $10K, likely reflecting lower-demand product categories rather than seller underperformance.
