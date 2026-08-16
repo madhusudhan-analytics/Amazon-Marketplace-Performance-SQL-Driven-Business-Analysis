@@ -505,3 +505,41 @@ order by Total_Revenue desc;
 
 **Finding:**
 Revenue is extremely concentrated geographically. Ohio alone accounts for 61.57% of total revenue, and Texas adds another 26.25%, meaning just two states generate 87.82% of all revenue. Of the 50 US states, only 34 have any recorded orders at all: Alabama, Alaska, Arizona, Arkansas, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, and Wyoming show zero revenue during this period. This points to a genuinely limited market footprint rather than just an uneven distribution, and is worth investigating further as it may reflect the business's operational, shipping, or marketing reach rather than a lack of organic demand.
+
+#### Q9: What does customer order frequency look like, and is there a loyal core of repeat customers?
+
+**Query:**
+```sql
+with Customer_Order_Counts as (
+    select o.Customer_id, count(distinct o.Order_id) as Order_Count
+    from Orders o
+    group by o.Customer_id
+)
+select 
+    case 
+        when Order_Count = 1 then '1 order'
+        when Order_Count between 2 and 3 then '2-3 orders'
+        when Order_Count between 4 and 6 then '4-6 orders'
+        when Order_Count between 7 and 10 then '7-10 orders'
+        else '10+ orders'
+    end as Order_Frequency_Band,
+    count(*) as Num_Customers,
+    round(count(*) * 100.0 / sum(count(*)) over (), 2) as Pct_of_Customers
+from Customer_Order_Counts
+group by 
+    case 
+        when Order_Count = 1 then '1 order'
+        when Order_Count between 2 and 3 then '2-3 orders'
+        when Order_Count between 4 and 6 then '4-6 orders'
+        when Order_Count between 7 and 10 then '7-10 orders'
+        else '10+ orders'
+    end
+order by min(Order_Count);
+```
+
+**Visualization:**
+
+![Customer Order Frequency Distribution](visuals/q09_customer_order_frequency.png)
+
+**Finding:**
+Customer order frequency is broadly spread rather than concentrated at either extreme. Only 5.54% of customers are one-time buyers, while nearly a third (30.90%) have placed 10+ orders, the single largest band, representing a genuinely loyal core. Frequency dips notably in the 7-10 order range, suggesting a possible drop-off point before customers either churn early or become true regulars. Combined with the earlier finding that repeat customers drive about 27x more revenue than one-time buyers, this indicates the business has a healthy retention engine, and the real opportunity is converting light repeat buyers (2-6 orders) into the loyal 10+ order segment.
