@@ -848,6 +848,61 @@ From 2020-2023, cumulative revenue consistently crosses the 50% mark in June or 
 Use the consistent June/July 50% crossover point as a benchmark for future revenue pacing and forecasting, and treat any year that deviates meaningfully from this pattern as an early signal worth investigating.
 
 
+## Project at a Glance
+
+| Category | Details |
+|---|---|
+| Database | MySQL |
+| Tables | 9 |
+| Orders Analyzed | 21,630+ |
+| Business Questions | 18 |
+| Analysis Type | SQL-Driven Business Analysis |
+| Focus Areas | Customers, Products, Sellers, Orders, Payments & Shipping |
+| SQL Techniques | Joins, CTEs, Subqueries, CASE, Aggregations & Window Functions |
+
+## Key Business Insights
+
+- Electronics contributed approximately 90% of total profit, indicating a significant concentration of profitability.
+- Repeat customers generated substantially higher revenue than one-time customers.
+- 212 customers had no associated orders, indicating customers who registered but did not purchase.
+- 15 products recorded no sales during the analysis period, highlighting potential demand or inventory concerns.
+- 488 cancelled orders had no shipping records, which was identified as expected operational behavior rather than a data-integrity issue.
+
+## Business Recommendations
+
+- Reduce dependency on Electronics by identifying and developing other profitable categories.
+- Focus on customer retention strategies to convert one-time customers into repeat buyers.
+- Review products with zero sales for pricing, demand, visibility, or inventory issues.
+- Monitor seller cancellation and shipping performance to improve marketplace operations.
+- Use customer order-frequency patterns to develop targeted retention campaigns.
+
+## 🛠️ SQL Skills Demonstrated
+
+- Data Validation & Quality Checks
+- INNER JOIN / LEFT JOIN
+- CTEs
+- Subqueries
+- CASE Statements
+- GROUP BY & HAVING
+- Aggregate Functions
+- Conditional Aggregation
+- Window Functions
+- RANK()
+- ROW_NUMBER()
+- Running Totals
+- Percentage Calculations
+- SQL Views
+
+## 📚 Key Learnings
+
+Through this project, I strengthened my ability to:
+
+- Translate business problems into SQL queries.
+- Work with multiple relational tables.
+- Perform data validation before analysis.
+- Use advanced SQL techniques such as CTEs and window functions.
+- Analyze customer, seller, product, and operational performance.
+- Convert SQL findings into actionable business recommendations.
 
 
 
