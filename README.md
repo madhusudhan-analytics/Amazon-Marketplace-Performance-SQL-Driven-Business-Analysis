@@ -296,6 +296,9 @@ group by c.Category_name;
 **Finding:**
 Electronics contributes nearly 90% of total profit (89.96%), an extreme concentration. Every other category combined accounts for roughly 10%. This signals a significant business risk: any disruption to Electronics (supply issues, demand shift, increased competition) would have an outsized impact on overall profitability. Diversification could be a strategic recommendation worth raising.
 
+**Suggestion:** 
+Consider building a category diversification strategy, even modest growth in Sports & Outdoors, Pet Supplies, or Toys & Games would meaningfully reduce dependence on Electronics without requiring it to underperform.
+
 #### Q2: What are the monthly revenue trends over the last 4+ years, and is there any seasonality or decline?
 
 **Query:**
@@ -316,6 +319,9 @@ order by Order_Month;
 
 **Finding:**
 Revenue holds steady between $2.0M–$2.8M per year from 2020–2023, with mild seasonal dips in Jan–Feb and a modest peak in late summer. However, revenue collapses by roughly 95% starting February 2024 and never recovers through July 2024, the end of the dataset. This is almost certainly a data completeness artifact, since the dataset appears to stop being reliably populated after January 2024, rather than a genuine business decline.
+
+**Suggestion:**
+Investigate and resolve the data pipeline or reporting gap causing the post-January 2024 collapse before using this dataset for any forward-looking forecasting or planning.
 
 #### Q3: What are the top 10 best-selling products by revenue, and do they differ from the top 10 by quantity sold?
 
@@ -359,6 +365,9 @@ limit 10;
 **Finding:**
 The top 10 products by revenue and top 10 by quantity sold have zero overlap. Revenue leaders are premium, low-volume electronics (Apple iMacs, MacBook Pros, high-end cameras), consistent with Electronics driving ~90% of total profit. Quantity leaders are inexpensive, high-volume items from Sports & Outdoors and Pet Supplies (resistance bands, soccer nets, dog beds). This confirms two distinct business dynamics: a small number of expensive electronics driving revenue and profit, while cheaper accessory-type products drive order volume and frequency.
 
+**Suggestion:**
+Run separate strategies for these two product groups, protect margins and availability on the premium electronics driving revenue, while using the high-volume accessory items to drive traffic, cross-sell, and customer acquisition.
+
 #### Q4: What percentage of total revenue comes from the top 20% of products?
 
 **Query:**
@@ -388,6 +397,9 @@ from Product_Revenue_Ranked;
 **Finding:**
 The top 20% of products (149 of 745) generate 79.71% of total revenue, closely matching the classic 80/20 Pareto pattern. This reinforces that revenue is highly concentrated in a relatively small set of high-value products, mostly premium electronics. From a strategy standpoint, protecting and growing this core product set matters far more than trying to boost the long tail of lower-revenue products.
 
+**Suggestion:**
+Prioritize inventory planning, marketing spend, and seller relationship management around the top 149 products, since protecting this core set has outsized impact compared to broad, evenly spread investment across the full catalog.
+
 #### Q5: How does average order value (AOV) trend month over month?
 
 **Query:**
@@ -411,7 +423,10 @@ order by Order_Month;
 **Finding:**
 AOV was consistently highest in 2020, particularly in January and February, and structurally declined from 2021 onward as order volume increased. 2024 sits clearly at the bottom of nearly every month, consistent with the data completeness issue identified earlier rather than a genuine demand drop. The ribbon view highlights how AOV rank between years shifts throughout the calendar year, though 2020 and 2024 remain the clearest outliers at the top and bottom respectively.
 
-### Section 2: Customer Behavior
+**Suggestion:**
+Investigate what changed operationally or competitively around March 2021 (pricing strategy, new product mix, promotions) that caused the structural AOV drop, understanding the cause could inform whether raising AOV back up is a viable growth lever.
+
+### Section 2: Customer Behaviour
 
 #### Q6: What percentage of customers are repeat buyers vs. one-time buyers, and how much revenue does each group drive?
 
@@ -460,6 +475,9 @@ group by ctl.Customer_Type;
 **Finding:**
 94.46% of customers who have ordered at all are repeat buyers, and only 5.54% (38 customers) are one-time buyers. Repeat customers (616, about 90% of paying customers) generate an average of $17,266 in lifetime revenue per customer, about 27x more than one-time buyers ($647 average). This reinforces that customer retention drives the vast majority of revenue, and highlights that improving new-customer conversion into repeat buyers is likely the clearest growth lever for this business.
 
+**Suggestion:**
+Invest in improving the one-time-to-repeat conversion funnel (e.g., post-purchase email campaigns, second-order discounts), since even a small shift of one-time buyers into the repeat category would have an outsized revenue impact given the 27x value gap.
+
 #### Q7: Who are the top 10 customers by lifetime spend?
 
 **Query:**
@@ -483,6 +501,9 @@ limit 10;
 **Finding:**
 Top 10 customers by lifetime spend range from $74,629 to $89,029, a relatively tight cluster rather than one dominant outlier, suggesting a genuine "top tier" segment rather than a single anomaly. These customers spend 4 to 5 times more than the average repeat customer ($17,266), making them a clear candidate for a VIP or loyalty program, or personalized retention outreach.
 
+**Suggestion:**
+Set up a formal VIP or loyalty tier for this top-spending segment, with personalized outreach or early access to new products, retaining these customers protects a disproportionate share of revenue.
+
 #### Q8: Which states generate the most revenue and orders, and is there a regional concentration risk?
 
 **Query:**
@@ -505,6 +526,9 @@ order by Total_Revenue desc;
 
 **Finding:**
 Revenue is extremely concentrated geographically. Ohio alone accounts for 61.57% of total revenue, and Texas adds another 26.25%, meaning just two states generate 87.82% of all revenue. Of the 50 US states, only 34 have any recorded orders at all: Alabama, Alaska, Arizona, Arkansas, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, and Wyoming show zero revenue during this period. This points to a genuinely limited market footprint rather than just an uneven distribution, and is worth investigating further as it may reflect the business's operational, shipping, or marketing reach rather than a lack of organic demand.
+
+**Suggestion:**
+Investigate whether the 16 zero-revenue states reflect a deliberate business decision (e.g., shipping limitations, marketing focus) or an untapped expansion opportunity, and evaluate the cost/benefit of expanding into 2-3 of the highest-potential states.
 
 #### Q9: What does customer order frequency look like, and is there a loyal core of repeat customers?
 
@@ -544,6 +568,9 @@ order by min(Order_Count);
 **Finding:**
 Customer order frequency is broadly spread rather than concentrated at either extreme. Only 5.54% of customers are one-time buyers, while nearly a third (30.90%) have placed 10+ orders, the single largest band, representing a genuinely loyal core. Frequency dips notably in the 7-10 order range, suggesting a possible drop-off point before customers either churn early or become true regulars. Combined with the earlier finding that repeat customers drive about 27x more revenue than one-time buyers, this indicates the business has a healthy retention engine, and the real opportunity is converting light repeat buyers (2-6 orders) into the loyal 10+ order segment.
 
+**Suggestion:**
+Design a targeted campaign for customers in the 2-6 order range to push them toward the 10+ order loyalty tier, since this middle segment represents the clearest volume opportunity for improving retention.
+
 ### Section 3: Seller & Marketplace Performance
 
 #### Q10: Which sellers generate the most revenue, and how concentrated is the marketplace?
@@ -568,6 +595,9 @@ order by Total_Revenue desc;
 
 **Finding:**
 The top 5 sellers (AnkerDirect, Tech Armor, iSaddle, AmazonBasics, Ailun) generate 65.72% of total revenue, and the top 10 generate 75.3%, meaningful concentration, but more gradual than the extreme dominance seen in category or state analysis. These top sellers are tightly clustered ($1.34M-$1.44M each) rather than one outlier dominating, suggesting a competitive top tier. A long tail of about 25 sellers, mostly household or personal care brands, each generate under $10K, likely reflecting lower-demand product categories rather than seller underperformance.
+
+**Suggestion:**
+Monitor the top 5 sellers closely as key business partners, and consider whether onboarding a few more sellers with a similar product mix could add a second growth tier without over-relying on any single seller.
 
 #### Q11: How does seller performance vary by origin (country)?
 
@@ -594,6 +624,9 @@ order by Total_Revenue desc;
 **Finding:**
 USA-based sellers dominate the marketplace, generating $372,909 per seller on average, 2.5x UK sellers, 3.2x China sellers, and over 100x Canadian sellers. Canada stands out as a striking outlier: 9 sellers generated only $31,747 combined revenue (about 22 orders per seller across the entire multi-year dataset), suggesting these may be newly onboarded sellers, a niche product category, or a distinct market segment rather than simple underperformance. Worth investigating further before drawing firm conclusions.
 
+**Suggestion:**
+Investigate the Canadian seller segment specifically, if it's due to onboarding timing or a logistics barrier, resolving it could unlock meaningful additional revenue given the seller count already in place.
+
 #### Q12: Which sellers have the highest cancellation or return rates?
 
 **Query:**
@@ -616,6 +649,9 @@ order by Cancel_Return_Rate_Pct desc;
 
 **Finding:**
 The highest cancel/return rates cluster among small-volume sellers (Charmin, Bounty, Luvs, BONA, all under 35 total orders), where a handful of returns swings the percentage sharply; these are statistically less reliable as a "problem seller" signal. The more meaningful finding is Cuisinart, with 411 orders and a 20.19% cancel/return rate, a large enough sample to represent a genuine pattern worth investigating. Separately, the top-5 revenue sellers all sit in a tight 14.5-16.5% band despite very high order volumes, suggesting a fairly consistent baseline cancel/return rate across the marketplace's biggest players rather than a fulfillment issue specific to any one of them.
+
+**Suggestion:**
+Prioritize a quality or fulfilment review specifically for Cuisinart given its high-volume, high-rate combination, and treat the small-sample sellers as lower-priority monitoring items rather than urgent action items.
 
 #### Q13: Is there a relationship between seller order volume and return rate?
 
@@ -656,6 +692,9 @@ order by min(Total_Orders);
 **Finding:**
 Cancel/return rate is essentially flat across seller volume tiers: low volume (15.73%), medium volume (14.93%), and high volume sellers (15.60%) all cluster within about 1 percentage point of each other. Seller size has no meaningful relationship with quality or fulfillment performance. This reframes the earlier Q12 finding: standout sellers like Cuisinart are seller-specific outliers rather than evidence of a broader tier-wide pattern.
 
+**Suggestion:**
+Since seller size isn't a reliable predictor of return rate, focus quality improvement efforts on individual seller-level investigation rather than volume-based policies or thresholds.
+
 ### Section 4: Operations - Shipping & Payments
 
 #### Q14: What is the payment failure rate, and does it cluster around specific sellers?
@@ -690,6 +729,9 @@ limit 10;
 **Finding:**
 Overall payment success rate is 84.61%, with 2.26% failed payments and 13.13% refunded. Payment failure rate holds steady around 2-4% across all sellers with meaningful volume, even the highest sellers (Shark at 3.75%, Hamilton Beach at 3.72%) are barely above the marketplace average. No evidence of failures concentrating around specific sellers; this looks like normal transactional noise rather than a seller-specific issue.
 
+**Suggestion:**
+No immediate action needed on payment failures given the consistent, low baseline rate, but continue monitoring in case any single seller's rate begins to diverge meaningfully from the marketplace average.
+
 #### Q15: What is the delivery success rate by shipping provider, and is one provider underperforming?
 
 **Query:**
@@ -712,6 +754,9 @@ order by Delivery_Success_Rate_Pct desc;
 
 **Finding:**
 Delivery performance varies enormously by provider. FedEx has a perfect 100% delivery success rate across all 14,346 shipments. DHL performs reasonably at 78.47%, with 948 shipments returned. Bluedart is a severe outlier: only 1 of 2,392 shipments (0.04%) shows as successfully delivered, with 79% returned and another 499 stuck in "Shipped" status unresolved. This is either a critical fulfillment failure specific to Bluedart or a data and tracking integration issue with that provider, and warrants immediate investigation given the risk to customer experience.
+
+**Suggestion:**
+Immediately escalate the Bluedart relationship for review, either to resolve a critical fulfilment issue or correct a data/tracking integration problem, and consider temporarily rerouting shipments through FedEx or DHL until resolved.
 
 #### Q16: What is the return rate by product category?
 
@@ -737,6 +782,9 @@ order by Return_Rate_Pct desc;
 
 **Finding:**
 Return rates are fairly consistent across categories, ranging from 11.86% (Clothing) to 14.46% (Home & Kitchen), no category shows a dramatic outlier. Notably, Electronics sits mid-pack at 13.87% despite driving about 90% of total profit, meaning the business's heavy reliance on Electronics isn't compounded by elevated return risk in that category. Home & Kitchen has the highest return rate, which could point to sizing, fit, or product-description accuracy issues worth investigating, though the gap from the average is modest.
+
+**Suggestion:**
+Take a closer look at Home & Kitchen product listings and sizing information to identify whether return causes are addressable (e.g., better product descriptions or images), though this is a lower-priority item given the modest gap from average.
 
 ### Section 5: Advanced / Strategic Synthesis
 
@@ -768,6 +816,9 @@ order by Product_Revenue desc;
 **Finding:**
 The revenue leader within each category varies dramatically in scale. The Apple iMac Pro (Electronics) generates $509,998.98, more than 100x the top product in Home & Kitchen ($3,894.79, Espresso Machine). This illustrates the Electronics concentration finding from earlier: a single flagship product effectively anchors the business's overall revenue and profit performance.
 
+**Suggestion:**
+Treat these category-leading products as anchor items in merchandising and marketing, ensuring they never go out of stock, since each one appears to single-handedly drive a disproportionate share of its category's performance.
+
 #### Q18: What does the cumulative revenue trend look like, and which month crosses 50% of each year's total revenue?
 
 **Query:**
@@ -790,12 +841,11 @@ select Order_Year, Order_Month, Monthly_Revenue,
 from Monthly_Revenue;
 ```
 
-**Visualization:**
-
-![Cumulative Revenue Trend by Year](visuals/q18_cumulative_revenue_trend.png)
-
 **Finding:**
 From 2020-2023, cumulative revenue consistently crosses the 50% mark in June or July each year, a remarkably stable pattern suggesting steady, mildly seasonal revenue growth rather than a single dominant sales spike. 2024 appears to cross 50% in January, but this is a data artifact: the 2024 total is only $391,428 due to the data completeness issue identified earlier, so this figure should not be interpreted as a genuine early-year sales surge.
+
+**Suggestion:**
+Use the consistent June/July 50% crossover point as a benchmark for future revenue pacing and forecasting, and treat any year that deviates meaningfully from this pattern as an early signal worth investigating.
 
 
 
