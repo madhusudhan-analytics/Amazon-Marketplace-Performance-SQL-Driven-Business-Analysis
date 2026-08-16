@@ -1,3 +1,6 @@
+# Amazon-Marketplace-Performance-SQL-Driven-Business-Analysis
+
+
 ## Project Overview
 
 This project analyses Amazon marketplace data using SQL as the primary analytical tool, with Power BI used only to visualize the resulting findings. It is designed to demonstrate strong SQL fundamentals, from data validation through advanced query techniques, applied to a real-world business analyst use case.
