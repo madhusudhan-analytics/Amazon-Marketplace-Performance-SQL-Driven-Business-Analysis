@@ -862,21 +862,33 @@ Use the consistent June/July 50% crossover point as a benchmark for future reven
 
 ## Key Business Insights
 
-- Electronics contributed approximately 90% of total profit, indicating a significant concentration of profitability.
-- Repeat customers generated substantially higher revenue than one-time customers.
-- 212 customers had no associated orders, indicating customers who registered but did not purchase.
-- 15 products recorded no sales during the analysis period, highlighting potential demand or inventory concerns.
-- 488 cancelled orders had no shipping records, which was identified as expected operational behavior rather than a data-integrity issue.
+- Electronics contributes 89.96% of total profit, creating significant category concentration risk.
+- The top 20% of products generate 79.71% of total revenue, closely following the Pareto principle.
+- The top 10 products by revenue have zero overlap with the top 10 products by quantity sold, showing different high-value and high-volume product segments.
+- Repeat customers generate significantly higher revenue per customer than one-time buyers.
+- 212 registered customers have never placed an order.
+- 15 products have never been ordered, highlighting potential underperforming or inactive listings.
+- 488 orders have no shipping record; investigation confirmed that all were cancelled orders, so this was expected rather than a data-quality issue.
+- Revenue drops by approximately 95% after January 2024, indicating a likely data-completeness issue rather than a genuine business decline.
 
 ## Business Recommendations
 
-- Reduce dependency on Electronics by identifying and developing other profitable categories.
-- Focus on customer retention strategies to convert one-time customers into repeat buyers.
-- Review products with zero sales for pricing, demand, visibility, or inventory issues.
-- Monitor seller cancellation and shipping performance to improve marketplace operations.
-- Use customer order-frequency patterns to develop targeted retention campaigns.
+1. **Reduce Category Concentration**
+   - Develop profitable non-Electronics categories to reduce dependence on Electronics.
 
-## 🛠️ SQL Skills Demonstrated
+2. **Focus on Customer Retention**
+   - Target one-time customers with personalized offers and retention campaigns to increase repeat purchases.
+
+3. **Protect High-Value Products**
+   - Prioritize inventory and seller management for the products responsible for the majority of revenue.
+
+4. **Improve Marketplace Operations**
+   - Review seller cancellation and shipping-provider performance to identify operational risks.
+
+5. **Investigate Data Completeness**
+   - Resolve the post-January 2024 revenue data gap before using the dataset for forecasting or trend-based decisions.
+
+## SQL Skills Demonstrated
 
 - Data Validation & Quality Checks
 - INNER JOIN / LEFT JOIN
@@ -893,16 +905,18 @@ Use the consistent June/July 50% crossover point as a benchmark for future reven
 - Percentage Calculations
 - SQL Views
 
-## 📚 Key Learnings
+## Key Learnings
 
 Through this project, I strengthened my ability to:
 
+- Validate relational datasets before performing analysis.
 - Translate business problems into SQL queries.
-- Work with multiple relational tables.
-- Perform data validation before analysis.
-- Use advanced SQL techniques such as CTEs and window functions.
-- Analyze customer, seller, product, and operational performance.
-- Convert SQL findings into actionable business recommendations.
+- Work with multiple related tables using JOINs.
+- Use CTEs and subqueries to structure complex analysis.
+- Apply window functions such as RANK(), ROW_NUMBER(), and LAG().
+- Perform customer, product, seller, sales, payment, and shipping analysis.
+- Identify data-quality issues and distinguish them from genuine business conditions.
+- Convert SQL results into actionable business recommendations.
 
 
 
