@@ -810,7 +810,7 @@ limit 10;
 
 **Visualization:**
 
-![Payment Failure Rate](visuals/q14_payment_failure_rate.png)
+![Q14 - Payment Failure Rate](visuals/q14_payment_failure_rate.p.png)
 
 **Finding:**
 Overall payment success rate is 84.61%, with 2.26% failed payments and 13.13% refunded. Payment failure rate holds steady around 2-4% across all sellers with meaningful volume, even the highest sellers (Shark at 3.75%, Hamilton Beach at 3.72%) are barely above the marketplace average. No evidence of failures concentrating around specific sellers; this looks like normal transactional noise rather than a seller-specific issue.
