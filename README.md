@@ -1,10 +1,5 @@
 # Amazon Marketplace Performance — SQL-Driven Business Analysis
 
-> **Business Analyst Portfolio Project**  
-> SQL-first marketplace analysis using **MySQL** for data validation and business analysis, with **Power BI used as the visualization layer only**.
-
----
-
 ## 📌 Project at a Glance
 
 | Category | Details |
