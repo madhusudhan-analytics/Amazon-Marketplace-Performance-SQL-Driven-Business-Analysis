@@ -1007,7 +1007,7 @@ Amazon-Marketplace-Performance-SQL-Driven-Business-Analysis/
 │
 ├── README.md
 ├── sql/
-│   ├── data_validation/
+│   ├── Relationship_Integrity_Checks/
 │   ├── Business_Questions_Answered/
 │ 
 │
