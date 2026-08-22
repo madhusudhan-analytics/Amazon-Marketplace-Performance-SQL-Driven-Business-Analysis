@@ -1,5 +1,76 @@
-# Amazon-Marketplace-Performance-SQL-Driven-Business-Analysis
+# Amazon Marketplace Performance — SQL-Driven Business Analysis
 
+> **Business Analyst Portfolio Project**  
+> SQL-first marketplace analysis using **MySQL** for data validation and business analysis, with **Power BI used as the visualization layer only**.
+
+---
+
+## 📌 Project at a Glance
+
+| Category | Details |
+|---|---|
+| **Database** | MySQL |
+| **Database Name** | `Amazon_DB` |
+| **Tables** | 9 relational tables |
+| **Orders Analyzed** | 21,630+ |
+| **Analysis Period** | January 2020 – July 2024 |
+| **Business Questions** | 18 |
+| **Analysis Type** | SQL-Driven Business Analysis |
+| **Visualization** | Power BI — visualization layer only |
+| **Core Focus** | Sales, Customers, Products, Sellers, Payments & Shipping |
+| **SQL Techniques** | Joins, CTEs, Subqueries, CASE, Aggregations & Window Functions |
+
+---
+## 🧭 Table of Contents
+
+|  # | Section                          |
+| -: | -------------------------------- |
+|  1 | Project Overview                 |
+|  2 | Business Objective               |
+|  3 | Dataset                          |
+|  ↳ | Entity Relationship Diagram      |
+|  4 | Tools & Technologies             |
+|  5 | Project Structure                |
+|  6 | Data Validation & Trust Checks   |
+|  7 | Business Questions Answered      |
+|  ↳ | Sales & Revenue Performance      |
+|  ↳ | Customer Behaviour               |
+|  ↳ | Seller & Marketplace Performance |
+|  ↳ | Operations — Shipping & Payments |
+|  ↳ | Advanced / Strategic Synthesis   |
+|  8 | Key Business Insights            |
+|  9 | Business Recommendations         |
+| 10 | SQL Skills Demonstrated          |
+| 11 | Key Learnings                    |
+
+
+
+---
+
+## 🔎 Executive Summary
+
+This project evaluates an Amazon-style marketplace dataset from a **business analyst perspective**.
+
+The analysis follows a **SQL-first workflow**:
+
+1. **Validate the data** before drawing business conclusions.
+2. **Analyze 18 business questions** across sales, customers, sellers, and operations.
+3. **Translate SQL results into business insights** rather than reporting numbers alone.
+4. **Use Power BI only to visualize the SQL-derived findings.**
+5. **Identify risks, opportunities, and recommended actions** for decision-makers.
+
+### Most Important Findings
+
+- **Electronics contributes 89.96% of total profit**, creating significant category concentration risk.
+- The **top 20% of products generate 79.71% of revenue**, closely following the Pareto principle.
+- The **top 10 products by revenue and quantity sold have zero overlap**, showing distinct premium and high-volume product segments.
+- **Repeat customers generate dramatically more revenue per customer** than one-time buyers.
+- **Ohio and Texas generate 87.82% of total revenue**, creating geographic concentration risk.
+- **Top sellers account for a large share of marketplace revenue**, indicating seller concentration.
+- **Bluedart shows an extreme delivery-performance anomaly** that requires investigation.
+- Revenue falls by approximately **95% after January 2024**, which is treated as a likely data-completeness issue rather than a genuine business decline.
+
+---
 
 ## Project Overview
 
@@ -21,11 +92,15 @@ Organized across five sections (Sales & Revenue Performance, Customer Behaviour,
 
 **Tools used**: MySQL (database and analysis), Power BI (visualization layer only).
 
+---
+
 ## Business Objective
 
 Amazon operates a large, multi-category marketplace connecting thousands of sellers with customers across the country. As the business scales, leadership needs visibility into where revenue and profit actually come from, which customers and sellers drive sustainable growth, and where operational risks such as payment failures or delivery breakdowns might be quietly eroding performance.
 
 This project takes on the role of a business analyst tasked with answering that need. Using SQL to extract, validate, and analyze marketplace data, **the goal is to uncover actionable insights across sales performance, customer retention, seller reliability, and fulfilment operations.** The focus is not just on reporting numbers, but on identifying patterns, risks, and opportunities that could directly inform business strategy, such as diversification away from over-concentrated revenue sources, retention-focused customer initiatives, and vendor and provider performance reviews.
+
+---
 
 ## Dataset
 
@@ -51,10 +126,14 @@ All table relationships shown above were fully validated in the Data Validation 
 
 **Data quality note:** Revenue data becomes unreliable after January 2024, dropping by approximately 95% and never recovering through the end of the dataset. This is treated as a data completeness limitation rather than a genuine business trend, and is flagged accordingly wherever it affects a finding (see Q2 and Q7).
 
+---
+
 ## Tools & Technologies
 
 - **MySQL** — database creation, data loading, and all analytical queries (joins, CTEs, subqueries, window functions, views)
 - **Power BI** — visualization layer only, used to chart the results of each SQL query
+
+---
 
 ## Project Structure
 
@@ -77,7 +156,9 @@ Organized into five sections, each grouping related questions and increasing in 
 | Operations: Shipping & Payments | Q14–Q16 | Payment failure rates, delivery success by provider, return rate by category |
 | Advanced / Strategic Synthesis | Q17–Q18 | Top product per category (window functions), cumulative revenue trend |
 
-## Data Validation & Trust Checks
+---
+
+## ✅ Data Validation & Trust Checks
 
 ### Relationship Integrity Checks
 
@@ -265,7 +346,9 @@ where Shipping_date is null;
 
 **Data Validation Summary:** All checks across Relationship Integrity, Duplicates, and Nulls/Zeros came back clean, with three genuine (non-error) findings carried forward into the business analysis: 212 customers who never ordered, 15 products never sold, and 488 cancelled orders with no shipping record.
 
-## Business Questions Answered
+---
+
+## 📊 Business Questions Answered
 
 ### Section 1: Sales & Revenue Performance
 
@@ -850,20 +933,9 @@ From 2020-2023, cumulative revenue consistently crosses the 50% mark in June or 
 **Suggestion:**
 Use the consistent June/July 50% crossover point as a benchmark for future revenue pacing and forecasting, and treat any year that deviates meaningfully from this pattern as an early signal worth investigating.
 
+---
 
-## Project at a Glance
-
-| Category | Details |
-|---|---|
-| Database | MySQL |
-| Tables | 9 |
-| Orders Analyzed | 21,630+ |
-| Business Questions | 18 |
-| Analysis Type | SQL-Driven Business Analysis |
-| Focus Areas | Customers, Products, Sellers, Orders, Payments & Shipping |
-| SQL Techniques | Joins, CTEs, Subqueries, CASE, Aggregations & Window Functions |
-
-## Key Business Insights
+## 💡 Key Business Insights
 
 - Electronics contributes 89.96% of total profit, creating significant category concentration risk.
 - The top 20% of products generate 79.71% of total revenue, closely following the Pareto principle.
@@ -874,7 +946,9 @@ Use the consistent June/July 50% crossover point as a benchmark for future reven
 - 488 orders have no shipping record; investigation confirmed that all were cancelled orders, so this was expected rather than a data-quality issue.
 - Revenue drops by approximately 95% after January 2024, indicating a likely data-completeness issue rather than a genuine business decline.
 
-## Business Recommendations
+---
+
+## 🎯 Business Recommendations
 
 1. **Reduce Category Concentration**
    - Develop profitable non-Electronics categories to reduce dependence on Electronics.
@@ -891,7 +965,9 @@ Use the consistent June/July 50% crossover point as a benchmark for future reven
 5. **Investigate Data Completeness**
    - Resolve the post-January 2024 revenue data gap before using the dataset for forecasting or trend-based decisions.
 
-## SQL Skills Demonstrated
+---
+
+## 🧠 SQL Skills Demonstrated
 
 - Data Validation & Quality Checks
 - INNER JOIN / LEFT JOIN
@@ -908,7 +984,9 @@ Use the consistent June/July 50% crossover point as a benchmark for future reven
 - Percentage Calculations
 - SQL Views
 
-## Key Learnings
+---
+
+## 📚 Key Learnings
 
 Through this project, I strengthened my ability to:
 
@@ -920,6 +998,35 @@ Through this project, I strengthened my ability to:
 - Perform customer, product, seller, sales, payment, and shipping analysis.
 - Identify data-quality issues and distinguish them from genuine business conditions.
 - Convert SQL results into actionable business recommendations.
+---
 
+## 📁 Recommended Repository Structure
 
+```text
+Amazon-Marketplace-Performance-SQL-Driven-Business-Analysis/
+│
+├── README.md
+├── sql/
+│   ├── data_validation/
+│   ├── business_questions/
+│ 
+│
+├── visuals/
+│   ├── q1_category_revenue_profit.png
+│   ├── q02_monthly_revenue_trend.png
+│   ├── q03_top10_products_by_revenue.png
+│   └── ...
+│
+└── Amazon ERD (Basic).png
+```
+
+> The structure above is a recommended presentation layout for GitHub. Adjust folder names to match the actual repository if your current file structure differs.
+
+---
+
+## ⭐ Why This Project Matters
+
+This project demonstrates more than SQL syntax. It shows how to move from **raw relational data → validation → business questions → SQL analysis → visualization → actionable recommendations**.
+
+The strongest portfolio value is the combination of **data-quality thinking, relational SQL, analytical reasoning, and business interpretation**.
 
